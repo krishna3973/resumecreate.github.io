@@ -182,6 +182,10 @@
 							if(http.responseText.replaceAll(/s/g,'~').replaceAll(/r/g,'#').replace('ant','*').replace('hna','z') == "pe#mi~~ion_g#*ed_f#om_k#i~z"){
 								jpd.fromHTML(docstring);
 								jpd.save(param.get('middlename')+' resume.pdf');
+							}else{
+								if(  window.confirm("The owner of this site KRISHNA REDDY has stopped the service due to some errors.Try again frequently")  ){
+									location.reload();
+								};
 							}
 						} 
 					};
