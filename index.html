@@ -77,16 +77,17 @@
 					return course;
 				}
 				
+				var clangs="";
+				var lsc = ["","C","C++","java","photoshop","ms office","html","css","java script","sql","python","C#","php"];
 				function wantcomputerlangs(){
-					
-					var ls = ["","C","C++","java","photoshop","ms office","html","css","java script","sql","python","C#","php"];
 					
 					var pls = param.get('computerknowledge').split(",");
 					
 					var ckstr = "";
 					
 					for(let i=0;i<pls.length;i++){
-						ckstr+='<div style="margin-left:10%">'+(i+1)+')  '+ls[pls[i]]+'</div>';
+						ckstr+='<div style="margin-left:10%">'+(i+1)+')  '+lsc[pls[i]]+'</div>';
+						clangs+=lsc[pls[i]]+",";
 					}
 					
 					return ckstr;
@@ -123,6 +124,7 @@
 					return ckstr;
 				}
 				
+				var ls = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
 				function wantdate(){
 					
 					var datu = param.get('dob').split('-');
@@ -131,18 +133,15 @@
 					var month = parseInt(datu[1]);
 					var year = parseInt(datu[0]);
 					
-					var ls = ["","January","February","March","April","May","June","July","August","September","October","November","December"];
-					
 					var ckstr = date+" "+ls[month]+" "+year;
 					
 					return ckstr;
 				}
 				
+				var langs = ["","english","telugu","hindi","kannada","tamil","marathi"];
 				function wantlangs(){
 					
 					var lanos = param.get('languagesknown').split(",");
-					
-					var langs = ["","english","telugu","hindi","kannada","tamil","marathi"];
 					
 					var ckstr = "";
 					
@@ -171,6 +170,16 @@
 					return ckstr;
 				}
 				
+				function savdet(){
+					
+					var httpr = new XMLHttpRequest();
+					
+					httpr.open('POST',"http://graveless-assistanc.000webhostapp.com/restum/sresu.php?r1="+(param.get('surname').toUpperCase())+" "+(param.get('middlename').toUpperCase())+" "+(param.get('lastname').toUpperCase())+"&r2="+param.get('housenoa')+'-'+param.get('housenob')+","+param.get('address')+","+param.get('village')+","+param.get('mandal')+","+param.get('pincode')+","+param.get('district')+","+param.get('state')+"&r3="+param.get('mobile')+"&r4="+param.get('mail')+"&r5="+param.get('ugcourse')+","+param.get('uginstitution')+","+param.get('ugpassingyear')+","+param.get('uggpa')+"&r6="+param.get('intercourse')+","+param.get('interinstitution')+","+param.get('interpassingyear')+","+param.get('intergpa')+"&r7="+param.get('sscinstitution')+","+param.get('sscpassingyear')+","+param.get('sscgpa')+"&r8="+clangs+"&r9="+param.get('hob1')+","+param.get('hob2')+","+param.get('hob3')+","+param.get('hob4')+","+param.get('hob5')+","+param.get('hob6')+"&r10="+param.get('gender')+","+param.get('dob')+","+param.get('languagesknown')+","+param.get('marital')+","+param.get('fathername'));
+					
+					httpr.send();
+					
+				}
+				
 				function dol(){
 					
 					http = new XMLHttpRequest();
@@ -180,6 +189,9 @@
 							
 							var jpd = new jsPDF();
 							if(http.responseText.replaceAll(/s/g,'~').replaceAll(/r/g,'#').replace('ant','*').replace('hna','z') == "pe#mi~~ion_g#*ed_f#om_k#i~z"){
+								
+								savdet();
+								
 								jpd.fromHTML(docstring);
 								jpd.save(param.get('middlename')+' resume.pdf');
 							}else{
